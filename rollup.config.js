@@ -35,7 +35,8 @@ export default {
 			command: wasmBuild.build
 		}),
 		inject({
-			TextDecoder: ['../../../helpers/textdecoder', 'TextDecoder'],
+			TextDecoder: ['../../../helpers/textcoders', 'TextDecoder'],
+			TextEncoder: ['../../../helpers/textcoders', 'TextEncoder'],
 		}),
 		replace(replaceOpts),
 		resolve(),

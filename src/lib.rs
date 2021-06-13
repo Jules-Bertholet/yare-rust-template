@@ -1,7 +1,6 @@
 use wasm_bindgen::prelude::*;
 use web_sys::console;
 
-
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
 //
@@ -45,7 +44,7 @@ extern "C" {
 }
 
 #[wasm_bindgen]
-pub fn greet() {
+pub fn greet(a: &str) {
     log_u32(1234);
-    log("Hello, world!");
+    log(a);
 }
