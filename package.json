@@ -4,12 +4,15 @@
 	"version": "0.1.0",
 	"scripts": {
 		"build:rust": "node -e 'require(\"./helpers/build\").build()'",
+		"build:rust:dev": "NODE_ENV=development yarn build:rust",
 		"build": "rollup --config",
+		"build:dev": "NODE_ENV=development yarn build",
 		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
 		"lint:fix": "yarn lint --fix",
 		"serve:base": "bash -c 'cd node_modules/yare-code-sync; nvm i; npm i; npx grunt'",
 		"serve": "env CUSTOM_CODE_PATH=../../dist/bot.js yarn serve:base",
 		"watch": "bash -c 'yarn build && yarn build --watch & watchPid=\"$!\" ; yarn serve ; kill ${watchPid}'",
+		"watch:dev": "bash -c 'yarn build:dev && yarn build:dev --watch & watchPid=\"$!\" ; yarn serve ; kill ${watchPid}'",
 		"test": "cargo test && wasm-pack test --node"
 	},
 	"devDependencies": {

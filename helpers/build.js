@@ -1,6 +1,11 @@
+'use strict';
+
 const fs = require("fs");
 const TOML = require('@iarna/toml');
 const { execSync } = require('child_process');
+const process = require("process");
+
+const isDevMode = process.env.NODE_ENV === 'development';
 
 function findReplace(file, ...findReplacePairs) {
 	let result = fs.readFileSync(file).toString();
@@ -49,10 +54,12 @@ module.exports.build = function () {
 	const projectName = TOML.parse(fs.readFileSync('./Cargo.toml').toString()).package.name;
 	const wasmDir = `./target/wasm-pack/${projectName}`
 
-	execSync("cargo build --lib --release --target wasm32-unknown-unknown --color always");
+	execSync(`cargo build --lib ${isDevMode ? '' : '--release'} --target wasm32-unknown-unknown --color always`);
 	execSync(`wasm-bindgen ./target/wasm32-unknown-unknown/release/${projectName.replace(/-/g, '_')}.wasm --out-dir ${wasmDir} --typescript --target web --out-name index`);
-	execSync(`wasm-opt ${wasmDir}/index_bg.wasm -o ${wasmDir}/index_bg.wasm-opt.wasm -O4`);
-	fs.renameSync(`${wasmDir}/index_bg.wasm-opt.wasm`, `${wasmDir}/index_bg.wasm`);
+	if (!isDevMode) {
+		execSync(`wasm-opt ${wasmDir}/index_bg.wasm -o ${wasmDir}/index_bg.wasm-opt.wasm -O4`);
+		fs.renameSync(`${wasmDir}/index_bg.wasm-opt.wasm`, `${wasmDir}/index_bg.wasm`);
+	}
 	console.log("Rust compiled to WASM successfully!");
 
 	fs.writeFileSync('./Cargo.toml.d.ts', `
