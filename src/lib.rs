@@ -3,7 +3,7 @@ use std::convert::TryFrom;
 use js_sys::Float64Array;
 use wasm_bindgen::prelude::*;
 use web_sys::console;
-use yare::{my_spirits, OperableSpirit, Spirit};
+use yare_bindings::{my_spirits, OperableSpirit, Spirit};
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.

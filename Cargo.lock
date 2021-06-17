@@ -152,9 +152,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "yare"
+name = "yare-bindings"
 version = "0.1.0"
-source = "git+https://github.com/Jules-Bertholet/yare-rust#82bc8efa466cee3aec614d6ccfdf25e91e8e3cc4"
+source = "git+https://github.com/Jules-Bertholet/yare-rust-bindings#89f4dc824116a3137ccd1f9602373f7b574170b6"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
@@ -168,5 +168,5 @@ dependencies = [
  "js-sys",
  "wasm-bindgen",
  "web-sys",
- "yare",
+ "yare-bindings",
 ]
