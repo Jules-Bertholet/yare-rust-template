@@ -1,9 +1,8 @@
 use std::convert::TryFrom;
 
-use js_sys::Float64Array;
 use wasm_bindgen::prelude::*;
 use web_sys::console;
-use yare_bindings::{my_spirits, OperableSpirit, Spirit};
+use yare_sys::{OperableSpirit, Spirit, graphics, my_spirits};
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
@@ -34,8 +33,8 @@ pub fn main_js() -> Result<(), JsValue> {
 
 // This function can be called from JS.
 #[wasm_bindgen]
-pub fn test_fn(a: OperableSpirit) {
+pub fn example_fn(a: OperableSpirit) {
     console::log_1(&(a.shape()).into()); // Log the provided spirit's shape
-    console::log_1(&(Float64Array::from(a.position().as_ref())).into()); // Log the provided spirits's position
+    graphics::square(&[1.0, 1.0], &[100.0, 100.0]); // Draw a square on the canvas
     a.shout("Mwahahah"); // Make the provided spirit shout "Mwahahah"
 }
