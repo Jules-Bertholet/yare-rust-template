@@ -4,8 +4,14 @@
 		"module": "ESNext",
 		"allowJs": true,
 		"moduleResolution": "node",
-		"lib": ["ESNext", "WebWorker"],
+		"lib": [
+			"ESNext",
+			"WebWorker"
+		]
 	},
 	"extends": "@tsconfig/node14/tsconfig.json",
-	"typeRoots": ["./typings", "./node_modules/@types"]
+	"typeRoots": [
+		"./typings",
+		"./node_modules/@types"
+	]
 }
