@@ -167,7 +167,7 @@ dependencies = [
 [[package]]
 name = "yare-sys"
 version = "0.1.0"
-source = "git+https://github.com/Jules-Bertholet/yare-rs#4c84d453a7b2786bfb1ea9925658f5e044162099"
+source = "git+https://github.com/Jules-Bertholet/yare-rs#924e750a6e1795f6816d9a712fa6e9acea5ffec5"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
