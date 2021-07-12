@@ -55,7 +55,8 @@ module.exports.build = function () {
 	const wasmDir = `./target/wasm-pack/${projectName}`
 
 	execSync(`cargo build --lib ${isDevMode ? '' : '--release'} --target wasm32-unknown-unknown --color always`);
-	execSync(`wasm-bindgen ./target/wasm32-unknown-unknown/${isDevMode ? 'debug' : 'release'}/${projectName.replace(/-/g, '_')}.wasm --out-dir ${wasmDir} --typescript --target web --out-name index`);
+	execSync(`cargo install wasm-bindgen-cli --root ./.cargo`);
+	execSync(`./.cargo/bin/wasm-bindgen ./target/wasm32-unknown-unknown/${isDevMode ? 'debug' : 'release'}/${projectName.replace(/-/g, '_')}.wasm --out-dir ${wasmDir} --typescript --target web --out-name index`);
 	if (!isDevMode) {
 		execSync(`wasm-opt ${wasmDir}/index_bg.wasm -o ${wasmDir}/index_bg.wasm-opt.wasm -O4`);
 		fs.renameSync(`${wasmDir}/index_bg.wasm-opt.wasm`, `${wasmDir}/index_bg.wasm`);

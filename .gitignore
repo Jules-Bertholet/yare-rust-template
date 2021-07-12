@@ -2,3 +2,4 @@ node_modules
 dist
 target
 wasm-pack.log
+.cargo
