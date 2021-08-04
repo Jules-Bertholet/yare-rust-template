@@ -144,30 +144,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2e0c4a743a309662d45f4ede961d7afa4ba4131a59a639f29b0069c3798bbcc2"
 
 [[package]]
-name = "web-sys"
-version = "0.3.52"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01c70a82d842c9979078c772d4a1344685045f1a5628f677c2b2eab4dd7d2696"
-dependencies = [
- "js-sys",
- "wasm-bindgen",
-]
-
-[[package]]
 name = "yareio-rust-template"
 version = "0.1.0"
 dependencies = [
  "console_error_panic_hook",
  "js-sys",
  "wasm-bindgen",
- "web-sys",
  "yareio-sys",
 ]
 
 [[package]]
 name = "yareio-sys"
 version = "0.1.0"
-source = "git+https://github.com/Jules-Bertholet/yareio-rs#f31a970260f5224952699809086c59ffc9729611"
+source = "git+https://github.com/Jules-Bertholet/yareio-rs#74b687865e7ae2e89b7afee038f4e3f2afba468e"
 dependencies = [
  "js-sys",
  "wasm-bindgen",

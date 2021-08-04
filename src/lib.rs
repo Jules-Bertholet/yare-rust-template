@@ -1,8 +1,7 @@
 use std::convert::TryFrom;
 
 use wasm_bindgen::prelude::*;
-use web_sys::console;
-use yareio_sys::{OperableSpirit, Spirit, graphics, my_spirits};
+use yareio_sys::{OperableSpirit, Spirit, graphics, my_spirits, log};
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
@@ -20,7 +19,7 @@ pub fn main_js() -> Result<(), JsValue> {
     console_error_panic_hook::set_once();
 
     // Your code goes here!
-    console::log_1(&JsValue::from_str("Hello world!"));
+    log!("Hello world!");
 
     // Iterates over all the spirits in `my_spirits`, and moves those that are operable to [1000.0, 1000.0].
     my_spirits()
@@ -34,7 +33,7 @@ pub fn main_js() -> Result<(), JsValue> {
 // This function can be called from JS.
 #[wasm_bindgen]
 pub fn example_fn(a: OperableSpirit) {
-    console::log_1(&(a.shape()).into()); // Log the provided spirit's shape
+    log!(a.shape()); // Log the provided spirit's shape
     graphics::square(&[1.0, 1.0], &[100.0, 100.0]); // Draw a square on the canvas
     a.shout("Mwahahah"); // Make the provided spirit shout "Mwahahah"
 }
