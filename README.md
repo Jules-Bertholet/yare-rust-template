@@ -12,6 +12,10 @@ To build the bot, run `yarn build`. The result will be stored in `dist/bot.js`. 
 
 Rust source code is stored under `src`. The entry point for the compiled WASM is `src/lib.rs`. TypeScript source code is under `ts`, with entry point `index.ts`. TypeScript types for Yare.io game objects are in `typings`. FFI Rust bindings are provided by the `yare-bindings` crate ([GitHub](https://github.com/Jules-Bertholet/yareio-rust-bindings), [Rustdoc](https://jules-bertholet.github.io/yareio-rust-bindings/yare_bindings/)).
 
+You can run `eslint` with `yarn lint`, or even use ESLint's autofix feature with `yarn lint:fix`.
+
+## `yare-code-sync`
+
 If you want to use [`yare-code-sync`](https://github.com/arikwex/yare-code-sync), you have two options:
 
 * `yarn serve` will serve `bot.js` with `yare-code-sync`.
@@ -25,4 +29,4 @@ To use `yare-code-sync`'s `RenderService`, place the following line at the top o
 import RenderService from 'yare-code-sync/client/RenderService';
 ```
 
-You can run `eslint` with `yarn lint`, or even use ESLint's autofix feature with `yarn lint:fix`.
+Alternatively, you can use `yare-sys`'s `render_service` module to access `RenderService` from Rust.

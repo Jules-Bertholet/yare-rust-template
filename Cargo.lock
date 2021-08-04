@@ -155,7 +155,7 @@ dependencies = [
 [[package]]
 name = "yareio-sys"
 version = "0.1.0"
-source = "git+https://github.com/Jules-Bertholet/yareio-rs#0168f7d9ccdda84b4b0d80643f8057639fb99bc5"
+source = "git+https://github.com/Jules-Bertholet/yareio-rs#7a56e4200c9efb70c7809fcd2d7b8f53f85674f7"
 dependencies = [
  "js-sys",
  "wasm-bindgen",

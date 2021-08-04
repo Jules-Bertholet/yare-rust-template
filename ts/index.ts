@@ -4,4 +4,4 @@ import RenderService from 'yare-code-sync/client/RenderService';
 // You code here
 const instance = wasm(); // Instantiate the WebAssembly module
 instance.example_fn(my_spirits[0]);
-RenderService.log("Hello world!");
+RenderService.log("Hello world from TS using RenderService!");

@@ -1,7 +1,7 @@
 use std::convert::TryFrom;
 
 use wasm_bindgen::prelude::*;
-use yareio_sys::{OperableSpirit, Spirit, graphics, my_spirits, log};
+use yareio_sys::{OperableSpirit, Spirit, graphics, log, my_spirits, render_service};
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
@@ -19,7 +19,9 @@ pub fn main_js() -> Result<(), JsValue> {
     console_error_panic_hook::set_once();
 
     // Your code goes here!
-    log!("Hello world!");
+    log!("Hello world from Rust!");
+
+    render_service::log("Hello world from Rust using RenderService!"); // Use yare-code-sync to log to the console
 
     // Iterates over all the spirits in `my_spirits`, and moves those that are operable to [1000.0, 1000.0].
     my_spirits()
