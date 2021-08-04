@@ -39,5 +39,4 @@ yareio-sys = { git = "https://github.com/Jules-Bertholet/yareio-rs" }
 # logging them with `console.error`. This is great for development, but requires
 # all the `std::fmt` and `std::panicking` infrastructure, so it's only enabled
 # in debug mode.
-#[target."cfg(debug_assertions)".dependencies]
-console_error_panic_hook = "0.1.6"
+console_error_panic_hook = { git = "https://github.com/Jules-Bertholet/console_log_panic_hook" }
