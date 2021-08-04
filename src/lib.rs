@@ -2,7 +2,7 @@ use std::convert::TryFrom;
 
 use wasm_bindgen::prelude::*;
 use web_sys::console;
-use yare_sys::{OperableSpirit, Spirit, graphics, my_spirits};
+use yareio_sys::{OperableSpirit, Spirit, graphics, my_spirits};
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.

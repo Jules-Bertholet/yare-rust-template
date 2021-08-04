@@ -1,6 +1,6 @@
 {
 	"author": "You <you@example.com>",
-	"name": "yare-rust-template",
+	"name": "yareio-rust-template",
 	"version": "0.1.0",
 	"scripts": {
 		"build:rust": "node -e 'require(\"./helpers/build\").build()'",

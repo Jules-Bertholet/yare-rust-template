@@ -10,7 +10,7 @@ You will need to install dependencies. To install JS dependencies, install and r
 
 To build the bot, run `yarn build`. The result will be stored in `dist/bot.js`. Note that if there are any errors during linting or building, nothing is output (warnings don't prevent building). Tou build only the WASM and FFI, run `yarn build:rust` (the compiled WASM and generated bindings are under `targets/wasm-pack`).
 
-Rust source code is stored under `src`. The entry point for the compiled WASM is `src/lib.rs`. TypeScript source code is under `ts`, with entry point `index.ts`. TypeScript types for Yare game objects are in `typings`. FFI Rust bindings are provided by the `yare-bindings` crate ([GitHub](https://github.com/Jules-Bertholet/yare-rust-bindings), [Rustdoc](https://jules-bertholet.github.io/yare-rust-bindings/yare_bindings/)).
+Rust source code is stored under `src`. The entry point for the compiled WASM is `src/lib.rs`. TypeScript source code is under `ts`, with entry point `index.ts`. TypeScript types for Yare.io game objects are in `typings`. FFI Rust bindings are provided by the `yare-bindings` crate ([GitHub](https://github.com/Jules-Bertholet/yareio-rust-bindings), [Rustdoc](https://jules-bertholet.github.io/yareio-rust-bindings/yare_bindings/)).
 
 If you want to use [`yare-code-sync`](https://github.com/arikwex/yare-code-sync), you have two options:
 

@@ -1,12 +1,12 @@
 # You must change these to your own details.
 [package]
-name = "yare-rust-template"
+name = "yareio-rust-template"
 version = "0.1.0"
 authors = ["You <you@example.com>"]
 edition = "2018"
 description = "Template for building a Yare.io bot with Rust and TypeScript."
 readme = "README.md"
-keywords = ["yare-io", "yareio", "yare"]
+keywords = ["yare.io", "yareio"]
 categories = ["wasm", "games"]
 
 [lib]
@@ -30,7 +30,7 @@ opt-level = 3 # set to 's' for smaller bundle size (but slower execution)
 # to interact with JavaScript.
 wasm-bindgen = "0.2.74"
 js-sys = "0.3.51"
-yare-sys = { git = "https://github.com/Jules-Bertholet/yare-rs" }
+yareio-sys = { git = "https://github.com/Jules-Bertholet/yareio-rs" }
 
 # Uncomment next line to include wee-alloc
 #wee_alloc = { version = "0.4.2", optional = true }
