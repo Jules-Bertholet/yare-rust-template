@@ -34,6 +34,6 @@ pub fn main_js() -> Result<(), JsValue> {
 #[wasm_bindgen]
 pub fn example_fn(a: OperableSpirit) {
     log!(a.shape()); // Log the provided spirit's shape
-    graphics::square(&[1.0, 1.0], &[100.0, 100.0]); // Draw a square on the canvas
+    graphics::rect(&[1.0, 1.0], &[100.0, 100.0]); // Draw a square on the canvas
     a.shout("Mwahahah"); // Make the provided spirit shout "Mwahahah"
 }
