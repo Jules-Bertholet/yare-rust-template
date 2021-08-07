@@ -1,14 +1,22 @@
 use std::convert::TryFrom;
 
 use wasm_bindgen::prelude::*;
-use yareio_sys::{OperableSpirit, Spirit, graphics, log, my_spirits, render_service};
+use yareio_sys::prelude::*;
+
+#[cfg(all(feature = "qimalloc", feature = "wee_alloc"))]
+compile_error!("Only one custom global allocator can be enabled at the same time");
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
-
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
+// When the `qimalloc` feature is enabled, this uses `wee_alloc` as the global
+// allocator.
+#[cfg(all(feature = "qimalloc", not(feature = "wee_alloc")))]
+#[global_allocator]
+static ALLOC: qimalloc::QIMalloc = qimalloc::QIMalloc::INIT;
 
 // This is like the `main` function; it is run when the WebAssembly module is instantiated.
 #[wasm_bindgen(start)]
@@ -27,7 +35,7 @@ pub fn main_js() -> Result<(), JsValue> {
     my_spirits()
         .iter()
         .filter_map(|s| TryFrom::<&Spirit>::try_from(s).ok())
-        .for_each(|s: &OperableSpirit| s.move_(&[1000.0, 1000.0]));
+        .for_each(|s: &OperableSpirit| s.move_to_pos(&[1000.0, 1000.0]));
 
     Ok(())
 }
@@ -36,6 +44,7 @@ pub fn main_js() -> Result<(), JsValue> {
 #[wasm_bindgen]
 pub fn example_fn(a: OperableSpirit) {
     log!(a.shape()); // Log the provided spirit's shape
+    graphics::set_style("test");
     graphics::rect(&[1.0, 1.0], &[100.0, 100.0]); // Draw a square on the canvas
     a.shout("Mwahahah"); // Make the provided spirit shout "Mwahahah"
 }

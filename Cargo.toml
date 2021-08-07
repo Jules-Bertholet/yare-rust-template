@@ -15,28 +15,31 @@ crate-type = ["cdylib"]
 [profile.release]
 lto = true
 codegen-units = 1
-opt-level = 3     # set to 's' for smaller bundle size (but slower execution)
+opt-level = 3  # set to 's' for smaller bundle size (but slower execution)
 
 [features]
 # `wee_alloc` is a tiny allocator for wasm that is only ~1K in code size
 # compared to the default allocator's ~10K. However, it is slower than the default
 # allocator, so it's not enabled by default.
-# If you uncomment this line, it will enable `wee_alloc`
-# You will also have to uncomment `wee_alloc` in dependencies below
-#default = ["wee_alloc"]
+# `qimalloc` is even simpler than `wee_alloc`, it never deallocates.
+default = [
+#	"wee_alloc", # Uncomment to enable `wee_alloc`
+#	"qimalloc", # Uncomment to enable `qimalloc`
+]
 
 [dependencies]
-# The `wasm-bindgen` crate provides the bare minimum functionality needed
-# to interact with JavaScript.
-wasm-bindgen = "0.2.74"
-js-sys = "0.3.51"
-yareio-sys = { git = "https://github.com/Jules-Bertholet/yareio-rs", features = [ "RenderService" ] }
+wasm-bindgen = "0.2.75"
+js-sys = "0.3.52"
+yareio-sys = { git = "https://github.com/Jules-Bertholet/yareio-rs", features = [
+	"RenderService",
+	"circles", # Switch to "squares" or "trianges" depending on the shape you play
+] }
 
-# Uncomment next line to include wee-alloc
-#wee_alloc = { version = "0.4.2", optional = true }
+wee_alloc = { version = "0.4.5", optional = true }
+qimalloc = { version = "0.1.0", optional = true }
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
-# logging them with `console.error`. This is great for development, but requires
+# logging them with `console.log`. This is great for development, but requires
 # all the `std::fmt` and `std::panicking` infrastructure, so it's only enabled
 # in debug mode.
 console_error_panic_hook = { git = "https://github.com/Jules-Bertholet/console_log_panic_hook" }

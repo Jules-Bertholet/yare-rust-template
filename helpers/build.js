@@ -8,16 +8,16 @@ const process = require("process");
 const isDevMode = process.env.NODE_ENV === 'development';
 
 function findReplace(file, ...findReplacePairs) {
-	let result = fs.readFileSync(file).toString();
-	findReplacePairs.forEach(pair => {
-		result = result.replace(pair[0], pair[1]);
-	});
-	fs.writeFileSync(file, result);
+    let result = fs.readFileSync(file).toString();
+    findReplacePairs.forEach(pair => {
+        result = result.replace(pair[0], pair[1]);
+    });
+    fs.writeFileSync(file, result);
 }
 
 
-const orig_load = 
-`async function load(module, imports) {
+const orig_load =
+    `async function load(module, imports) {
     if (typeof Response === 'function' && module instanceof Response) {
         if (typeof WebAssembly.instantiateStreaming === 'function') {
             try {
@@ -49,32 +49,52 @@ const orig_load =
 }`
 
 module.exports.build = function () {
-	console.log("Compiling Rust to WASM...");
+    console.log("Compiling Rust to WASM...");
 
-	const projectName = TOML.parse(fs.readFileSync('./Cargo.toml').toString()).package.name;
-	const wasmDir = `./target/wasm-pack/${projectName}`
+    const cargoToml = TOML.parse(fs.readFileSync('./Cargo.toml').toString());
+    const projectName = cargoToml.package.name;
+    const rustOptLevel = cargoToml.profile.release["opt-level"];
+    let wasmOptOptLevel;
+    switch (rustOptLevel) {
+        case 3:
+            wasmOptOptLevel = "4";
+            break;
+        case 2:
+            wasmOptOptLevel = "2";
+            break;
+        case 1:
+            wasmOptOptLevel = "1";
+            break;
+        case "s":
+            wasmOptOptLevel = "z";
+            break;
+        default:
+            wasmOptOptLevel = "0";
+            break;
+    }
+    const wasmDir = `./target/wasm-pack/${projectName}`
 
-	execSync(`cargo build --lib ${isDevMode ? '' : '--release'} --target wasm32-unknown-unknown --color always`);
-	execSync(`cargo install wasm-bindgen-cli --root ./.cargo`);
-	execSync(`./.cargo/bin/wasm-bindgen ./target/wasm32-unknown-unknown/${isDevMode ? 'debug' : 'release'}/${projectName.replace(/-/g, '_')}.wasm --out-dir ${wasmDir} --typescript --target web --out-name index`);
-	if (!isDevMode) {
-		execSync(`wasm-opt ${wasmDir}/index_bg.wasm -o ${wasmDir}/index_bg.wasm-opt.wasm -O4`);
-		fs.renameSync(`${wasmDir}/index_bg.wasm-opt.wasm`, `${wasmDir}/index_bg.wasm`);
-	}
-	console.log("Rust compiled to WASM successfully!");
+    execSync(`cargo build --lib ${isDevMode ? '' : '--release'} --target wasm32-unknown-unknown --color always`);
+    //execSync(`cargo install wasm-bindgen-cli --root ./.cargo`);
+    execSync(`./.cargo/bin/wasm-bindgen ./target/wasm32-unknown-unknown/${isDevMode ? 'debug' : 'release'}/${projectName.replace(/-/g, '_')}.wasm --out-dir ${wasmDir} --typescript --target web --out-name index`);
+    if (!isDevMode) {
+        execSync(`wasm-opt ${wasmDir}/index_bg.wasm -o ${wasmDir}/index_bg.wasm-opt.wasm -O${wasmOptOptLevel}`);
+        fs.renameSync(`${wasmDir}/index_bg.wasm-opt.wasm`, `${wasmDir}/index_bg.wasm`);
+    }
+    console.log("Rust compiled to WASM successfully!");
 
-	fs.writeFileSync('./Cargo.toml.d.ts', `
+    fs.writeFileSync('./Cargo.toml.d.ts', `
 type Exports = typeof import("${wasmDir}/index");
 declare const exports: () => Exports;
 export default exports;`
-	);
+    );
 
-	findReplace(`${wasmDir}/index.js`,
-		['async function init(input) {', 'function init(input) {'],
-		['const { instance, module } = await load(await input, imports);', 'const { instance, module } = load(input, imports);'],
-		[
-			orig_load,
-`function load(module, imports) {
+    findReplace(`${wasmDir}/index.js`,
+        ['async function init(input) {', 'function init(input) {'],
+        ['const { instance, module } = await load(await input, imports);', 'const { instance, module } = load(input, imports);'],
+        [
+            orig_load,
+            `function load(module, imports) {
     const date = "${Date.now()}";
     if (typeof memory === "undefined") {
         globalThis.memory = {};
@@ -87,14 +107,14 @@ export default exports;`
     const instance = new WebAssembly.Instance(memory.__compiledModule, imports);
     return { instance, module };
 }`
-		]
-	);
+        ]
+    );
 
-	findReplace(`${wasmDir}/index.d.ts`,
-		['InitInput | Promise<InitInput>', 'InitInput'],
-		['Promise<InitOutput>', 'InitOutput'],
-		['InitInput | Promise<InitInput>', 'InitInput'],
-		['Promise<InitOutput>', 'InitOutput']
-	);
+    findReplace(`${wasmDir}/index.d.ts`,
+        ['InitInput | Promise<InitInput>', 'InitInput'],
+        ['Promise<InitOutput>', 'InitOutput'],
+        ['InitInput | Promise<InitInput>', 'InitInput'],
+        ['Promise<InitOutput>', 'InitOutput']
+    );
 }
 
