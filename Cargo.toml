@@ -6,7 +6,7 @@ authors = ["You <you@example.com>"]
 edition = "2018"
 description = "Template for building a Yare.io bot with Rust and TypeScript."
 readme = "README.md"
-keywords = ["yare.io", "yareio"]
+keywords = ["yareio"]
 categories = ["wasm", "games"]
 
 [lib]
@@ -30,7 +30,7 @@ default = [
 [dependencies]
 wasm-bindgen = "0.2.75"
 js-sys = "0.3.52"
-yareio-sys = { git = "https://github.com/Jules-Bertholet/yareio-rs", features = [
+yareio-sys = { version = "0.9.0", features = [
 	"RenderService",
 	"circles", # Switch to "squares" or "trianges" depending on the shape you play
 ] }

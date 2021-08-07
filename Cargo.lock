@@ -208,8 +208,9 @@ dependencies = [
 
 [[package]]
 name = "yareio-sys"
-version = "0.1.0"
-source = "git+https://github.com/Jules-Bertholet/yareio-rs#7eca778b8a5c34d7b454279445619f72b2d179e7"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ddba5f985344546c3d8bd46a90747b95035c8f5e8b45adb1bde0afcab917d5c7"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
