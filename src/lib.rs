@@ -3,18 +3,15 @@ use std::convert::TryFrom;
 use wasm_bindgen::prelude::*;
 use yareio_sys::prelude::*;
 
-#[cfg(all(feature = "qimalloc", feature = "wee_alloc"))]
-compile_error!("Only one custom global allocator can be enabled at the same time");
-
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-// When the `qimalloc` feature is enabled, this uses `wee_alloc` as the global
+// When the `qimalloc` feature is enabled, this uses `qimalloc` as the global
 // allocator.
-#[cfg(all(feature = "qimalloc", not(feature = "wee_alloc")))]
+#[cfg(feature = "qimalloc")]
 #[global_allocator]
 static ALLOC: qimalloc::QIMalloc = qimalloc::QIMalloc::INIT;
 

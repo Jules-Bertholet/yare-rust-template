@@ -22,6 +22,7 @@ opt-level = 3  # set to 's' for smaller bundle size (but slower execution)
 # compared to the default allocator's ~10K. However, it is slower than the default
 # allocator, so it's not enabled by default.
 # `qimalloc` is even simpler than `wee_alloc`, it never deallocates.
+# You'll also need to enable the optional dependencies below.
 default = [
 #	"wee_alloc", # Uncomment to enable `wee_alloc`
 #	"qimalloc", # Uncomment to enable `qimalloc`
@@ -35,8 +36,8 @@ yareio-sys = { version = "0.9.3", features = [
 	"circles", # Switch to "squares" or "trianges" depending on the shape you play
 ] }
 
-wee_alloc = { version = "0.4.5", optional = true }
-qimalloc = { version = "0.1.0", optional = true }
+#wee_alloc = { version = "0.4.5", optional = true } # Uncomment to enable `wee_alloc`
+#qimalloc = { version = "0.1.0", optional = true } # Uncomment to enable `qimalloc`
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
 # logging them with `console.log`. This is great for development, but requires
